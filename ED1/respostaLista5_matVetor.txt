@@ -1,0 +1,160 @@
+// questão 01
+#include <stdio.h>
+
+void imprimir_mat_v(int *v, int n, int m) {
+    for (int k = 0; k < n * m; k++) {
+        printf("%4d", v[k]); // 
+        
+        // Se a próxima posição (k+1) for múltipla da largura (m),
+        // significa que chegamos ao fim de uma linha teórica.
+        if ((k + 1) % m == 0 && m!=0) {
+            printf("\n"); // Quebra de linha 
+        }
+    }
+}
+
+
+//questão 02
+#include <stdio.h>
+
+void soma_linhas_v(int *v, int n, int m, int *soma_lin) {
+    for (int i = 0; i < n; i++) {
+        soma_lin[i] = 0; // Inicializa a soma da linha i 
+        for (int j = 0; j < m; j++) {
+            // Acessa o elemento i,j usando a fórmula: i * largura + j
+            soma_lin[i] += v[i * m + j]; 
+        }
+    }
+}
+
+
+//questão 03
+#include <stdio.h>
+
+void soma_colunas_diag_v(int *v, int n, int *soma_col, int *diag) {
+    *diag = 0; // Inicializa acumulador da diagonal 
+    
+    // Inicializa o vetor de colunas em uma única passagem
+    for (int j = 0; j < n; j++) soma_col[j] = 0;
+
+    for (int i = 0; i < n; i++) {
+        // Otimização: Soma o elemento da diagonal principal da linha i
+        // Índice da diagonal principal em vetor: i * n + i
+        *diag += v[i * n + i]; 
+        
+        for (int j = 0; j < n; j++) {
+            // Soma o elemento atual na respectiva coluna j 
+            soma_col[j] += v[i * n + j]; 
+        }
+    }
+}
+
+
+//questão 04
+#include <stdio.h>
+
+void soma_colunas_diag_v(int *v, int n, int *soma_col, int *diag) {
+    *diag = 0; // Inicializa acumulador da diagonal 
+    
+    // Inicializa o vetor de colunas em uma única passagem
+    for (int j = 0; j < n; j++) soma_col[j] = 0;
+
+    for (int i = 0; i < n; i++) {
+        // Otimização: Soma o elemento da diagonal principal da linha i
+        // Índice da diagonal principal em vetor: i * n + i
+        *diag += v[i * n + i]; 
+        
+        for (int j = 0; j < n; j++) {
+            // Soma o elemento atual na respectiva coluna j 
+            soma_col[j] += v[i * n + j]; 
+        }
+    }
+}
+
+
+//questão 05
+#include <stdio.h>
+
+void multiplicar_v(int *a, int *b, int *c, int n, int m, int p) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < p; j++) {
+            // Localizamos a posição C[i][j] no vetor: i * largura_de_C + j
+            int idx_c = i * p + j; 
+            c[idx_c] = 0; // Inicialização obrigatória
+
+            for (int k = 0; k < m; k++) {
+                /*
+                  A[i][k] -> i * m + k (largura de A é m)
+                  B[k][j] -> k * p + j (largura de B é p)
+                */
+                c[idx_c] += a[i * m + k] * b[k * p + j];
+            }
+        }
+    }
+}
+
+
+//questão 06
+#include <stdio.h>
+
+int buscar_v(int *v, int n, int m, int alvo, int *linhas, int *colunas) {
+    int t = 0;
+    for (int k = 0; k < n * m; k++) {
+        if (v[k] == alvo) {
+            linhas[t] = k / m;  // Linha (i): k / m (divisão inteira pelo total de colunas)
+            colunas[t] = k % m; // Coluna (j): k % m (o resto da divisão)
+            t++;
+        }
+    }
+    return t; // Retorna total de ocorrências 
+}
+
+
+//questão 07
+#include <stdio.h>
+
+void extrair_sub_v(int *a, int n, int m, int *b, int li, int lj, int h, int w) {
+    for (int i = 0; i < h; i++) {
+        for (int j = 0; j < w; j++) {
+            /* 1. Índice em 'b' (submatriz): 
+                  i * largura_da_submatriz + j -> i * w + j
+               
+               2. Índice em 'a' (matriz original):
+                  (li + i) * largura_da_orig + (lj + j) -> (li + i) * m + (lj + j)
+            */
+            b[i * w + j] = a[(li + i) * m + (lj + j)];
+        }
+    }
+}
+
+
+//questão 08
+#include <stdio.h>
+
+#include <limits.h> // Necessário para INT_MIN
+
+int maior_soma_linha_v(int *v, int n, int m, int *soma_max) {
+    int indice_maior = 0;
+    
+    // Inicializamos com o menor valor possível para garantir que
+    // qualquer soma de linha (mesmo negativa) seja maior que este início.
+    *soma_max = INT_MIN; 
+
+    for (int i = 0; i < n; i++) {
+        int soma_atual = 0;
+        
+        // Percorre os elementos da linha i
+        for (int j = 0; j < m; j++) {
+            // Mapeamento: i * largura_total + j
+            soma_atual += v[i * m + j];
+        }
+
+        // Atualiza o máximo global e guarda o índice da linha
+        if (soma_atual > *soma_max) {
+            *soma_max = soma_atual;
+            indice_maior = i;
+        }
+    }
+
+    return indice_maior;
+}

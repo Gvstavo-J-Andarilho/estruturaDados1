@@ -1,0 +1,114 @@
+questão 01:
+Leitura e impressão de vetor
+Escreva ler_vetor, que lê N inteiros e os armazena no vetor via ponteiro, e imprimir_inverso, que imprime os elementos na ordem inversa.
+
+Protótipo
+void ler_vetor(int *v, int n);
+void imprimir_inverso(int *v, int n);
+
+questão 02:
+Maior e menor elemento
+Escreva maior_menor que percorre um vetor de N reais e preenche, via ponteiros, o maior valor e seu índice, e o menor valor e seu índice.
+
+Protótipo
+void maior_menor(float *v, int n,
+               float *maior, int *idx_maior,
+               float *menor, int *idx_menor);
+
+questão 03:
+Soma e média
+Escreva soma_media que calcula via ponteiros: (a) a soma de todos os elementos, (b) a média aritmética, e (c) quantos elementos estão estritamente acima da média.
+
+Protótipo
+void soma_media(int *v, int n,
+              int *soma, float *media, int *acima);
+
+questão 04:
+Busca linear
+Implemente busca_linear que percorre o vetor elemento a elemento procurando alvo. Retorna o índice do primeiro encontrado (ou −1) e registra em *cmps o total de comparações.
+
+Protótipo
+int busca_linear(int *v, int n, int alvo, int *cmps);
+Trecho de referência (incompleto)
+for(int i=0; iif(v[i]==alvo) return i;
+}
+return -1;
+
+
+questão 05:
+Busca binária
+Implemente busca_binaria para vetores ordenados em ordem crescente. Retorna o índice de alvo (ou −1) e registra em *cmps o número de comparações realizadas.
+
+Protótipo
+int busca_binaria(int *v, int n, int alvo, int *cmps);
+Trecho de referência (incompleto)
+int ini=0, fim=n-1;
+while(ini<=fim){
+    int meio=ini+(fim-ini)/2;
+    (*cmps)++;
+    if(v[meio]==alvo) return meio;
+    else if(v[meio]/*?*/;
+    else fim=/*?*/;
+}
+
+
+questão 06:
+Interseção de dois vetores
+Implemente intersecao que preenche c com os elementos presentes em ambos a e b, sem repetições, e retorna o tamanho de c.
+
+Protótipo
+int intersecao(int *a, int n, int *b, int m, int *c);
+Trecho de referência (incompleto)
+int esta_em(int *v, int n, int x){ /* helper */ }
+
+
+Remoção de elemento por posição
+Vetores — Exercício 7
+
+Remoção de elemento por posição
+Escreva remover que remove o elemento na posição pos deslocando todos os elementos subsequentes uma posição para a frente, e retorna o novo tamanho do vetor.
+
+Protótipo
+int remover(int *v, int n, int pos);
+Trecho de referência (incompleto)
+for(int i=pos; i1; i++)
+    v[i]=/*?*/;
+
+Vetores — Exercício 8
+Rotação circular
+Implemente rotacionar que desloca todos os elementos k posições à esquerda; elementos que saem pelo início reaparecem no final. Trate k ≥ n. Exemplo: {1,2,3,4,5} com k=2 → {3,4,5,1,2}.
+Protótipo
+void rotacionar(int *v, int n, int k);
+Trecho de referência (incompleto)
+int tmp=v[0];
+for(int i=0; i1; i++) v[i]=v[i+1];
+v[n-1]=tmp;
+
+Vetores — Exercício 9
+Mesclagem de vetores ordenados
+Implemente mesclar que recebe dois vetores já ordenados e preenche c com todos os elementos em ordem crescente, sem usar nenhum algoritmo de ordenação.
+Protótipo
+void mesclar(int *a, int n, int *b, int m, int *c);
+Trecho de referência (incompleto)
+int i=0,j=0,k=0;
+while(iif(a[i]<=b[j]) c[k++]=a[i++];
+    else /*?*/
+}
+
+Vetores — Exercício 10
+Frequência de elementos
+Implemente frequencia que conta quantas vezes cada valor de v (entre 0 e max_val) aparece e armazena em freq. Exiba no main apenas valores com frequência maior que zero.
+Protótipo
+void frequencia(int *v, int n, int *freq, int max_val);
+Trecho de referência (incompleto)
+for(int i=0; i/*?*/]++;
+
+Vetores — Exercício 11
+Verificação de palíndromo
+Implemente palindromo que retorna 1 se o vetor é igual lido de frente ou de trás, e 0 caso contrário.
+Protótipo
+int palindromo(int *v, int n);
+Trecho de referência (incompleto)
+for(int i=0; i2; i++)
+    if(v[i]!=v[/*N-1-i*/]) return 0;
+

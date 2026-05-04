@@ -1,0 +1,194 @@
+//questão 01
+#include <stdio.h>
+
+#define COLS 4
+
+// Preenche a matriz 3x4
+void ler_matriz(int (*m)[COLS], int lin, int col) {
+    for (int i = 0; i < lin; i++) {
+        for (int j = 0; j < col; j++) {
+            // Lendo o valor para a linha i, coluna j
+            scanf("%d", &m[i][j]);
+        }
+    }
+}
+// Exibe a matriz com colunas alinhadas
+void imprimir_matriz(int (*m)[COLS], int lin, int col) {
+    for (int i = 0; i < lin; i++) {
+        for (int j = 0; j < col; j++) {
+            // Usamos apenas %5d. 
+            // Se o número for " -10", ele ocupa 3 espaços + 2 vazios à esquerda.
+            // Se for "1000", ocupa 4 espaços + 1 vazio à esquerda.
+            printf("%5d", m[i][j]);
+        }
+        printf("\n"); // Quebra de linha após percorrer todas as colunas
+    }
+}
+
+
+//questão 02
+#include <stdio.h>
+
+#define COLS 4
+
+void soma_linhas(int (*m)[COLS], int n, int cols, int *soma_lin) {
+    for (int i = 0; i < n; i++) {
+        // 1. Antes de somar a linha, garantimos que o acumulador comece em zero
+        *(soma_lin + i) = 0; 
+        
+        for (int j = 0; j < cols; j++) {
+            // 2. Somamos o elemento atual da matriz ao total daquela linha
+            *(soma_lin + i) += m[i][j];
+        }
+    }
+}
+
+//questão 03
+void soma_colunas_diag(int (*m)[N], int n, int *soma_col, int *diag) {
+    // Inicializamos a diagonal aqui (apenas uma variável simples)
+    *diag = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            
+            // ESTRATÉGIA: Se for a primeira linha que estamos visitando,
+            // em vez de somar (+=), nós APENAS ATRIBUÍMOS (=).
+            // Isso equivale a zerar e somar ao mesmo tempo!
+            if (i == 0) {
+                *(soma_col + j) = m[i][j];
+            } else {
+                *(soma_col + j) += m[i][j];
+            }
+
+            // A diagonal principal continua com a mesma lógica
+            if (i == j) {
+                *diag += m[i][j];
+            }
+        }
+    }
+}
+
+
+//questão 04
+#include <stdio.h>
+
+#define N 3
+#define M 4
+
+void transpor(int (*orig)[M], int (*trans)[N], int n, int m) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            // A mágica acontece aqui: invertemos os índices
+            // O que era linha 'i' vira coluna 'i'
+            // O que era coluna 'j' vira linha 'j'
+            trans[j][i] = orig[i][j];
+        }
+    }
+}
+
+
+//questão 05
+#include <stdio.h>
+/* Definições de exemplo conforme o protótipo */
+#define M 3  
+#define P 4 
+void multiplicar(int (*a)[M], int (*b)[P], int (*c)[P], int n, int m, int p) {
+    int i, j, k;
+    // Percorre cada linha da matriz A
+    for (i = 0; i < n; i++) {
+        // Percorre cada coluna da matriz B
+        for (j = 0; j < p; j++) {
+            
+            // 1. Inicializa a posição C[i][j] com zero antes de começar a somar
+            c[i][j] = 0;
+
+            // 2. O laço 'k' faz o produto escalar:
+            // Percorre a coluna de A (m elementos) e a linha de B (m elementos)
+            for (k = 0; k < m; k++) {
+                c[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+}
+
+
+//questão 06
+#include <stdio.h>
+
+#define COLS 4
+
+int buscar_matriz(int (*m)[COLS], int n, int cols, int alvo, int *linhas, int *colunas) {
+    int ocorrencias = 0;
+
+    // Percorre a matriz linha por linha
+    for (int i = 0; i < n; i++) {
+        // Percorre cada coluna da linha atual
+        for (int j = 0; j < cols; j++) {
+            
+            // Se encontrarmos o valor que estamos buscando
+            if (m[i][j] == alvo) {
+                // Guardamos a coordenada 'i' no vetor de linhas
+                linhas[ocorrencias] = i;
+                // Guardamos a coordenada 'j' no vetor de colunas
+                colunas[ocorrencias] = j;
+                
+                // Incrementamos o contador de ocorrências
+                ocorrencias++;
+            }
+        }
+    }
+
+    // Retornamos o total para que a main saiba quantos elementos ler nos vetores
+    return ocorrencias;
+}
+
+
+//questão 07
+#include <stdio.h>
+
+#define M 5  // Colunas da matriz original
+#define W 3  // Colunas da submatriz
+
+void extrair_sub(int (*orig)[M], int n, int m,
+              int (*sub)[W], int li, int lj, int h, int w) {
+    
+    for (int i = 0; i < h; i++) {
+        for (int j = 0; j < w; j++) {
+            // A submatriz sempre começa no [0][0] dela mesma
+            // A original é acessada com o deslocamento (li, lj)
+            sub[i][j] = orig[li + i][lj + j];
+        }
+    }
+}
+
+
+//questão 08
+
+#include <stdio.h>
+#include <limits.h> // Necessário para usar INT_MIN
+
+#define COLS 4
+
+int maior_soma_linha(int (*m)[COLS], int n, int cols, int *soma_max) {
+    int indice_maior = 0;
+    
+    // Inicialização explícita: "Limpamos" o lixo de memória
+    // com o menor valor possível do sistema.
+    *soma_max = INT_MIN; 
+
+    for (int i = 0; i < n; i++) {
+        int soma_atual = 0;
+        
+        for (int j = 0; j < cols; j++) {
+            soma_atual += m[i][j];
+        }
+
+        // Agora a comparação é sempre segura e direta
+        if (soma_atual > *soma_max) {
+            *soma_max = soma_atual;
+            indice_maior = i;
+        }
+    }
+
+    return indice_maior;
+}
